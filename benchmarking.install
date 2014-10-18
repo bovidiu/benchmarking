@@ -1,0 +1,105 @@
+<?php 
+
+/*
+ * Install
+ */
+function benchmarking_install() {
+  drupal_set_message(t('Installation successfull'));
+}
+
+/**
+* Implementation of hook_uninstall()
+*/
+function benchmarking_uninstall() {
+    drupal_set_message(t('Module Removed. Please delete the tables manually'));
+}
+
+function benchmarking_schema() {
+
+  //website list
+  $schema["benchmarking_website_list"] = array(
+    'description' => 'Process que and websites recordings',
+    'fields' => array(
+      'id_bwl' => array(
+        'description' => 'Primary key',
+        'type' => 'serial',
+        'not null' => TRUE
+      ),
+      'website_name' => array(
+        'description' => 'Website name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'activate' => array(
+        'description' => 'Website name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      )
+    ),
+    'primary key' => array('id_bwl')
+  );
+  //website settings
+  $schema["benchmarking_website_settings"] = array(
+    'description' => 'Process que and websites recordings',
+    'fields' => array(
+      'id_bws' => array(
+        'description' => 'Primary key',
+        'type' => 'serial',
+        'not null' => TRUE
+      ),
+      'api' => array(
+        'description' => 'Website name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'runs' => array(
+        'description' => 'Website name',
+        'type' => 'varchar',
+        'length' => 1,
+        'not null' => TRUE
+      ),
+      'location' => array(
+        'description' => 'Website name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      )
+    ),
+    'primary key' => array('id_bws')
+  );
+
+    $schema["benchmarking_website_tracking_data"] = array(
+        'description' => 'Process que and websites recordings',
+        'fields' => array(
+            'id_btd' => array(
+                'description' => 'Primary key',
+                'type' => 'serial',
+                'not null' => TRUE
+            ),
+            'code' => array(
+                'description' => 'Website name',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE
+            ),
+            'date' => array(
+                'description' => 'Website name',
+                'type' => 'varchar',
+                'length' => 1,
+                'not null' => TRUE
+            ),
+            'fk_uid' => array(
+                'description' => 'Website name',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE
+            )
+        ),
+        'primary key' => array('id_bws')
+    );
+  return $schema;
+
+}

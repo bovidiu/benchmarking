@@ -1,0 +1,114 @@
+<?php
+
+module_load_include('php', 'benchmarking', 'controller/SettingsController');
+module_load_include('php', 'benchmarking', 'controller/RunController');
+
+
+function benchmarking_menu() {
+  $items = array();
+
+  $items['admin/config/benchmarking'] = array(
+    'title' => t('Web performance'),
+    'description' => t('Wep performance list websites.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('benchmarking_admin_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'benchmarking.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['admin/config/benchmarking/websites'] = array(
+    'title' => t('Websites'),
+    'description' => t('Wep performance list websites.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('benchmarking_admin_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'benchmarking.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10
+  );
+
+  $items['admin/config/benchmarking/settings'] = array(
+    'title' => t('Settings'),
+    'description' => t('Wep performance settings page.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('benchmarking_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'benchmarking.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  $items['benchmarking/disable-website'] = array(
+    'title' 			=> t('Benchmarking website list'),
+    'description' 		=> t('Administer NetPlay TV  module.'),
+    'page callback' 	=> 'deactivateWebsite',
+    'access arguments' 	=> array('administer site configuration'),
+  );
+  $items['benchmarking/activate-website'] = array(
+        'title' 			=> t('Benchmarking website list'),
+        'description' 		=> t('Administer NetPlay TV  module.'),
+        'page callback' 	=> 'activateWebsite',
+        'access arguments' 	=> array('administer site configuration'),
+  );
+  $items['benchmarking/remove-website'] = array(
+       'title' 			=> t('Benchmarking website list'),
+       'description' 		=> t('Administer NetPlay TV  module.'),
+       'page callback' 	=> 'removeWebsite',
+       'access arguments' 	=> array('administer site configuration'),
+  );
+    $items['benchmarking/location'] = array(
+        'title' 			=> t('Benchmarking website list'),
+        'description' 		=> t('Administer NetPlay TV  module.'),
+        'page callback' 	=> 'getServerLocation',
+        'access arguments' 	=> array('administer site configuration'),
+    );
+    $items['benchmarking/make-run'] = array(
+        'title' 			=> t('Benchmarking website list'),
+        'description' 		=> t('Administer NetPlay TV  module.'),
+        'page callback' 	=> 'makeARun',
+        'access arguments' 	=> array('administer site configuration'),
+    );
+  return $items;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function benchmarking_block_info() {
+  $blocks = array();
+  $blocks['diagramUpdate'] = array(
+    'info' => t('Benchmarking Update Diagram'),
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function benchmarking_block_view($delta='') {
+
+  $block = array();
+  switch($delta) {
+    case 'diagramUpdate':
+      $block['content'] = drawFormDiagram();
+      break;
+  }
+
+  return $block;
+}
+
+function deactivateWebsite(){
+    return SettingsController::getInstance()->disableWebsite(arg(2));
+}
+function activateWebsite(){
+    return SettingsController::getInstance()->activateWebsite(arg(2));
+}
+function removeWebsite(){
+    return SettingsController::getInstance()->removeWebsite(arg(2));
+}
+function getServerLocation(){
+    echo SettingsController::getInstance()->getServerResults();
+}
+function makeARun(){
+    return RunController::getInstance()->initRun(arg(2));
+}

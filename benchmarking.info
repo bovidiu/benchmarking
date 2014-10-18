@@ -1,0 +1,7 @@
+; $Id$
+name = Benchmarking
+description = Benchmarking website testing based on WebPageTest.org API
+core = 7.x
+package = OSb Web Solutions 
+version = "7.x-1.0"
+configure = admin/config/benchmarking
