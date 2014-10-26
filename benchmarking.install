@@ -88,7 +88,7 @@ function benchmarking_schema() {
             'date' => array(
                 'description' => 'Website name',
                 'type' => 'varchar',
-                'length' => 1,
+                'length' => 255,
                 'not null' => TRUE
             ),
             'fk_uid' => array(

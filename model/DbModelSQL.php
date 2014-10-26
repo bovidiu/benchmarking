@@ -17,7 +17,7 @@ class DbModelSQL {
   }
   /*CHECKS*/
   public function checkDuplicateWebsite($url){
-    $res = $this->_conn->query("SELECT * FROM benchmarking_website_list WHERE website_name ='$url' LIMIT 1");
+    $res = $this->_conn->query("SELECT * FROM {benchmarking_website_list} WHERE website_name ='$url' LIMIT 1");
     $arr=array();
     while($row = $res->fetchObject()){
       $arr[] = $row;
@@ -25,7 +25,7 @@ class DbModelSQL {
     return $arr;
   }
   public function checkActivationWebsite($arg){
-    $res = $this->_conn->query("SELECT activate FROM benchmarking_website_list WHERE id_bwl ='$arg' LIMIT 1");
+    $res = $this->_conn->query("SELECT activate FROM {benchmarking_website_list} WHERE id_bwl ='$arg' LIMIT 1");
     $arr=array();
     while($row = $res->fetchObject()){
       $arr[] = $row;
@@ -34,7 +34,7 @@ class DbModelSQL {
   }
   /*SELECTS*/
   public function selectSettings(){
-    $res = $this->_conn->query("SELECT * FROM benchmarking_website_settings ORDER BY id_bws DESC LIMIT 1");
+    $res = $this->_conn->query("SELECT * FROM {benchmarking_website_settings} ORDER BY id_bws DESC LIMIT 1");
     $arr=array();
     while($row = $res->fetchObject()){
       $arr[] = $row;
@@ -42,7 +42,7 @@ class DbModelSQL {
     return $arr;
   }
     public function selectWebsiteURL($arg){
-        $res = $this->_conn->query("SELECT website_name FROM benchmarking_website_list WHERE id_bwl = '$arg' ");
+        $res = $this->_conn->query("SELECT website_name FROM {benchmarking_website_list} WHERE id_bwl = '$arg' ");
         $arr=array();
         while($row = $res->fetchObject()){
             $arr["website_name"] = $row->website_name;
@@ -52,7 +52,7 @@ class DbModelSQL {
 
   /*UPDATE*/
     public function disableWebsite($arg){
-        $res = $this->_conn->update("benchmarking_website_list")
+        $res = $this->_conn->update("{benchmarking_website_list}")
             ->fields(array(
                 'activate' => '0'
             ))
@@ -61,7 +61,7 @@ class DbModelSQL {
         return $res;
     }
     public function activateWebsite($arg){
-        $res = $this->_conn->update("benchmarking_website_list")
+        $res = $this->_conn->update("{benchmarking_website_list}")
             ->fields(array(
                 'activate' => '1'
             ))

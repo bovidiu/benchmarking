@@ -38,7 +38,7 @@ class RunController {
         $data = array(
             'code'      => $data->data->testId,
             'date'      => time(),
-            'fk_bid'    => $websiteID
+            'fk_uid'    => $websiteID
         );
         DbModelSQL::getInstance()->insertWebsiteTrackingCode($data);
         drupal_set_message(t('Test running.'),'status');
