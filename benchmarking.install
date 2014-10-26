@@ -98,7 +98,7 @@ function benchmarking_schema() {
                 'not null' => TRUE
             )
         ),
-        'primary key' => array('id_bws')
+        'primary key' => array('id_btd')
     );
   return $schema;
 
